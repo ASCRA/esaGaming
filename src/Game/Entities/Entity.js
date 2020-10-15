@@ -1,13 +1,18 @@
+  import {calculateObjSize} from "../helpers"
+  import * as consts from "../constants"
+
+  let objSize = calculateObjSize();
+  
   export class Card{
-    constructor(x, y, s, img, action, text) {
-      this.pos = s.createVector(x, y);
-      this.velocity = s.createVector(0, 0);
+    constructor(x, y, p5, img, action, text) {
+      this.pos = p5.createVector(x, y);
+      this.velocity = p5.createVector(0, 0);
       this.rotation = 0;
       this.img = img;
       this.sizeMod = 1;
-      this.scale = s.createVector(2.5, 3.5);
+      this.scale = p5.createVector(2.5, 3.5);
       this.shouldBeRemoved = false;
-      this.s = s;
+      this.p5 = p5;
       this.action = action;
       this.hasMoved = false;
       this.text = text;
@@ -19,24 +24,24 @@
         this.handleMovement();
 
       if(this.timer > 0)
-      this.timer-=2/this.s.frameRate();
+        this.timer-=2/this.p5.frameRate();
     }
   
     handleMovement() {
-      if(this.action == 1)
+      if(this.action === 1)  //Action reffering to moving cards on the table from right to left when revealed
       {
-        this.pos.x-=5; 
-        if(this.pos.x <= window.width/2)
+        this.pos.x-=objSize/6; 
+        if(this.pos.x <= window.innerWidth/2)
         {
           this.hasMoved = true;
-          if(window.playerHasBet === 2)
-            window.playerHasBet = 0;
+          if(consts.PLAYER_HAS_BET === 2)  //Only when the object has moved we can set the PLAYER_HAS_BET variable back to 0
+            consts.changePlayerHasBet(0);
           this.action = 0;
         }
       }
-      if(this.action == 2)
+      if(this.action === 2) //Action reffering to previous cards that pop out and shrink to be shown above the table
       {
-        if(this.sizeMod>=0.4)
+        if(this.sizeMod>=0.4) //calling "if" on every redraw of the object and shrinking it every time by 0.05 until it reaches the size of 0.4 of this.sizeMod
         this.sizeMod-=0.05;
       }
     }
@@ -44,25 +49,25 @@
     render() {
       if (!this.img) return;
   
-      const size = window.objSize * this.sizeMod;
-  
-      this.s.push();
-        this.s.translate(this.pos.x, this.pos.y);
-        this.s.rotate(this.rotation);
-        this.s.scale(this.scale.x, this.scale.y);
-        this.s.image(this.img, -size / 2, -size / 2, size, size);
-        if(this.action == 1 && this.timer != 0)
+      const size = objSize * this.sizeMod;
+
+      this.p5.push();
+        this.p5.translate(this.pos.x, this.pos.y);
+        this.p5.rotate(this.rotation);
+        this.p5.scale(this.scale.x, this.scale.y);
+        this.p5.image(this.img, -size / 2, -size / 2, size, size);
+        if(this.action === 1 && this.timer !== 0)
         {
-          this.s.textSize(window.objSize/6);
-          this.s.fill(255,255,255);
-          this.s.text(this.text, -size/2 + window.objSize/4, -size / 2 - window.objSize/8);
+          this.p5.textSize(objSize/6);
+          this.p5.fill(255,255,255);
+          this.p5.text(this.text, -size/2 + objSize/4, -size / 2 - objSize/8);
         }
-        if(this.action == 2)
+        if(this.action === 2)
         {
-        this.s.textSize(window.objSize/8);
-        this.s.fill(255,255,255);
-        this.s.text(this.text, -size/2, -size / 2 - window.objSize/20);
+        this.p5.textSize(objSize/8);
+        this.p5.fill(255,255,255);
+        this.p5.text(this.text, -size/2, -size / 2 - objSize/20);
         }
-      this.s.pop();
+      this.p5.pop();
     }
   }
