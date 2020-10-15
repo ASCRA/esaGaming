@@ -1,13 +1,5 @@
 import styled, { css } from 'styled-components';
-
-function calculateObjSize(){
-  const widescreenSizeModifier = (window.innerHeight > window.innerWidth) ? 1 : 0.75;
-  return Math.floor(Math.min(Math.floor(window.innerWidth / 20), Math.floor(window.innerHeight / 20)) * widescreenSizeModifier);
-}
-
-const GameBody = styled.div`
-    margin-top: 0px;
-`;
+import {calculateObjSize} from "./helpers"
 
 const Panel = styled.div`
   position: absolute;
@@ -54,4 +46,4 @@ const Button = styled.button`
   border-radius: ${props => props.radius}%;
 `
 
-export {Button, GameBody, Panel, Image}
+export {Button, Panel, Image}

@@ -1,5 +1,5 @@
 import React from "react";
-import Game from "./Game/index.js"
+import Game from "./Game"
 
 function App() {
   return (
@@ -10,3 +10,5 @@ function App() {
 }
 
 export default App;
+
+//<Game />
