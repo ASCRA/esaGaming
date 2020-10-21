@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
-import game from "./Game"
-import {Button, Panel, Image} from "./StyledComponents"
+import game from "./Game";
+import {Button, Panel, Image} from "./StyledComponents";
 import { useStorageState  } from 'state-persist';
 import P5Wrapper from 'react-p5-wrapper';
 import {getRandomInt} from "./helpers"
 import * as consts from "./constants"
 
 function Game() {
+    
     const [balance, setBalance] = useStorageState ('balance', process.env.REACT_APP_STARTING_BALANCE);
     const [playerBet, setPlayerBet] = useStorageState ('playerBet', process.env.REACT_APP_STARTING_TOTAL_BET);
     const [totalBet, setTotalBet] = useStorageState ('totalBet', process.env.REACT_APP_STARTING_PLAYER_BET);
@@ -34,7 +35,6 @@ function Game() {
     }, [currentCard, usedCards, cardsToDraw]);
 
     function changeNumber(hl) {
-
         if (consts.PLAYER_HAS_BET !== 0 || totalBet === 0 || consts.GAME_OVER === consts.GAME_END_ON_BALANCE_LOST)
              return 0;
 
@@ -55,7 +55,6 @@ function Game() {
                         return 0;
 
                     if (hl) {
-                        console.log(consts.PLAYER_HAS_BET)
                         if (number > currentCard[1]) {
                             consts.changeMessage("NICE!")
                             consts.changeSmallText("Higher")
@@ -75,7 +74,6 @@ function Game() {
                     }
 
                     else {
-                        console.log(consts.PLAYER_HAS_BET)
                         if (number < currentCard[1]) {
                             setTotalBet(totalBet + playerBet);
                             consts.changeMessage("NICE!")

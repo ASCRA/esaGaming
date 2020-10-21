@@ -95,7 +95,10 @@ export default function game(p5) {  //p5 is used as a constant to reference p5 a
               timer -= 2/p5.frameRate();
           
           if(timer <= 0)
-              timer = 1;
+              {
+                consts.changeGameOver(0);
+                timer = 1;
+              }
         }
 
         if(prevCards[0])
