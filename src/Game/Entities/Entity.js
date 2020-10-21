@@ -34,9 +34,9 @@
         if(this.pos.x <= window.innerWidth/2)
         {
           this.hasMoved = true;
+          this.action = 0;
           if(consts.PLAYER_HAS_BET === 2)  //Only when the object has moved we can set the PLAYER_HAS_BET variable back to 0
             consts.changePlayerHasBet(0);
-          this.action = 0;
         }
       }
       if(this.action === 2) //Action reffering to previous cards that pop out and shrink to be shown above the table
